@@ -393,4 +393,6 @@ autocmd BufEnter * silent! lcd %:p:h
 " CocList service: shows the current running languages server
 " For most coc-x, do CocInstall coc-x to install, and add to the global
 " extensions. CocList extensions: shows the installed extensions
-"
+" " and then add 1-0 and y can copy things to register. Rg can show those
+" texts, and " + {} + p will paste that text
+" "+y will copy to system clipboard
