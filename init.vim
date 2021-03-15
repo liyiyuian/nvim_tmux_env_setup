@@ -1,10 +1,12 @@
 " TODO:
 " 1. make LaTeX works
 " 2. python package import is showing problem
+" 3. git branch on airline
+" 4. folding method
 
 syntax on
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/pack')
 Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'tpope/vim-surround'
 "Plug 'lervag/vimtex'
@@ -37,8 +39,7 @@ colorscheme gruvbox
 let g:gruvbox_contrast_dark='hard'
 set background=dark
 let g:gruvbox_bold='1'
-set number
-let g:gruvbox_hls_cursor='orange'
+let g:gruvbox_hls_cursor='aqua'
 let g:gruvbox_number_column='bg1'
 let g:gruvbox_sign_column='bg1'
 let g:gruvbox_color_column='bg1'
@@ -49,9 +50,9 @@ let g:gruvbox_invert_selection='1'
 let g:gruvbox_invert_signs='0'
 let g:gruvbox_invert_indent_guides='1'
 let g:gruvbox_invert_tabline='1'
-let g:python_highlight_all = 1"
 let g:indent_guides_enable_on_vim_startup=0
-"let g:lightline = {'colorscheme': 'jellybeans',}
+let g:lightline = {'colorscheme': 'jellybeans',}
+set number
 set laststatus=2
 set noshowmode
 set mouse=a
@@ -366,12 +367,20 @@ set splitright
 
 " show tabs
 set list
-set listchars=tab:>-
+set listchars=tab:\¦-
+
+" set highlight color 
+" ref color: https://jonasjacek.github.io/colors/
+hi Search ctermbg=0
+hi Search ctermfg=15 
+
+
 
 " highlight background past 80 chars
 " autocmd FileType python let &colorcolumn=join(range(81,999),",")
 
-imap fj <Esc>
+imap jk <Esc>
+imap kj <Esc>
 " :cd %:p:h can set the directory to the current working directory
 " % gives the name of the current file, $:p gives its full path, and
 " %:p:h gives its directory (the "head" fo the full path)
@@ -380,6 +389,20 @@ imap fj <Esc>
 " directory of the current file.
 autocmd BufEnter * silent! lcd %:p:h
 
+set pumheight=20 " makes popup menu smaller
+
+" better tabbing
+vnoremap < <gv
+vnoremap > >gv
+
+" auto source when writing to init.vim TODO: Does this really work????
+"au! BufWritePost $MYVIMRC source %
+
+" resize windows
+"nnoremap <M-j> :resize -2<CR>
+"nnoremap <M-k> :resize +2<CR>
+"nnoremap <M-h> :vertical resize -2<CR>
+"nnoremap <M-l> :vertical resize +2<CR>
 
 " ############################  Notes for packages  ############################
 " Press ctrl-p to get the markdown preview
@@ -396,3 +419,19 @@ autocmd BufEnter * silent! lcd %:p:h
 " " and then add 1-0 and y can copy things to register. Rg can show those
 " texts, and " + {} + p will paste that text
 " "+y will copy to system clipboard
+" use ctr+w + w to switch to pop-up window, and use ctrl+w + q to exit the
+" popup
+" For a split window: You can use Ctrl-w + and Ctrl-w - to resize the height of the current window by a single row. For a vsplit window: You can use Ctrl-w > and Ctrl-w < to resize the width of the current window by a single column. Additionally, these key combinations accept a count prefix so that you can change the window size in larger steps. [e.g. Ctrl-w 10 + increases the window size by 10 lines]
+" To resize all windows to equal dimensions based on their splits, you can use Ctrl-w =.
+" To increase a window to its maximum height, use Ctrl-w _.
+" To increase a window to its maximum width, use Ctrl-w |.
+"
+""Swap top/bottom or left/right split
+" Ctrl+W R
+
+"Break out current window into a new tabview
+" Ctrl+W T
+
+"Close every window in the current tabview but the current one
+" Ctrl+W o
+
