@@ -26,6 +26,14 @@ There is no better working environment than vim plus tmux.
     - Then add the path to the $PATH
     - ```pip2 install pynvim; pip3 install pynvim```
 
+# fzf and fd setup
+* ```sudo apt install fzf```
+* ```sudo apt-get install fd-find```
+* Might need to do some changes in .bashrc for fd depends on environment setup.
+
+# bat setup
+* ```apt install bat```
+
 # Tmux setup
 * This configuration file works with tmux version 3.0a
 * Download the tmux.conf to home directory, and change the name to .tmux.conf
