@@ -18,6 +18,10 @@ There is no better working environment than vim plus tmux.
     - check current nodejs version: ```nvm ls```
     - check remote versions: ```nvm ls-remote```
     - install the required version: ```nvm install [version.number]```
+  - Or install with conda and install yarn with conda
+    - Then, cd ~/.config/nvim/pack/coc.nvim
+    - yarn install
+    - yarn build
 * Step4: Open the nvim and do ":PlugInstall"
 * Step5: checkhealth provider, install pynvim packages
   - Install pip: 
