@@ -8,6 +8,7 @@ There is no better working environment than vim plus tmux.
 * Step1: Download the neovim ```sudo apt-get install neovim```. If neovim is not in the repository, then:
   - ```sudo apt-get install software-properties-common; sudo add-apt-repository ppa:neovim-ppa/stable; sudo apt-get update```
   - prerequisites for python modules: ```sudo apt-get install python-dev python-pip python3-dev python3-pip```
+  - Or, download the prebuild version from the neovim website and then add the program to the PATH
 * Step2: Downlaod the neovim-plug from [here](https://github.com/junegunn/vim-plug)
   - ```sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'```
