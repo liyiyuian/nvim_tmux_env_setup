@@ -39,6 +39,9 @@ There is no better working environment than vim plus tmux.
 # bat setup
 * ```apt install bat``` or ```conda install -c conda-forge bat```
 
+# tree setup
+* ```conda install -c conda-forge tree```
+
 # Tmux setup
 * This configuration file works with tmux version 3.0a
 * Download the tmux.conf to home directory, and change the name to .tmux.conf
