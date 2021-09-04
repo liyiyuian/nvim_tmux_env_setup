@@ -2,7 +2,7 @@
 There is no better working environment than vim plus tmux.
 
 # bpytop setup
-* Install with ```pip3 install bpytop --upgrade``` or ```sudo snap install bpytop```
+* Install with ```pip3 install bpytop --upgrade``` or ```sudo snap install bpytop``` or ```conda install -c conda-forge bpytop```
 
 # NeoVim setup
 * Step1: Download the neovim ```sudo apt-get install neovim```. If neovim is not in the repository, then:
@@ -32,12 +32,12 @@ There is no better working environment than vim plus tmux.
     - ```pip2 install pynvim; pip3 install pynvim```
 
 # fzf and fd setup
-* ```sudo apt install fzf```
-* ```sudo apt-get install fd-find```
+* ```sudo apt install fzf``` or ```conda install -c conda-forge fzf```
+* ```sudo apt-get install fd-find``` or ```conda install -c conda-forge fd-find```
 * Might need to do some changes in .bashrc for fd depends on environment setup.
 
 # bat setup
-* ```apt install bat```
+* ```apt install bat``` or ```conda install -c conda-forge bat```
 
 # Tmux setup
 * This configuration file works with tmux version 3.0a
