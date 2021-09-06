@@ -46,5 +46,9 @@ There is no better working environment than vim plus tmux.
 * This configuration file works with tmux version 3.0a
 * Download the tmux.conf to home directory, and change the name to .tmux.conf
 
+# OpenAI Codex Plugin
+* https://github.com/tom-doerr/vim_codex
+
+
 
 *(Basic knownledge of vim and tmux will be added soon...)*
