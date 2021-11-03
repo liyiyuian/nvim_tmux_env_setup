@@ -52,3 +52,6 @@ There is no better working environment than vim plus tmux.
 
 
 *(Basic knownledge of vim and tmux will be added soon...)*
+
+# Gruxbox theme for linux terminal
+* https://reposhub.com/linux/shell-customization/Mayccoll-Gogh.html
