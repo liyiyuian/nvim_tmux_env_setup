@@ -63,9 +63,9 @@ IMHO, better than htop.
 * ```conda install -c conda-forge tree```
 
 # Tmux setup
-* This configuration file works with tmux version 3.0a
-* Download the tmux.conf to home directory, and change the name to .tmux.conf
-* Downlaod tmux plugin manager: [link](https://github.com/tmux-plugins/tpm)
+* This configuration file works with tmux version 3.0a (and potentially above)
+* Download the tmux.conf to home directory, and change the name to ```.tmux.conf```
+* Downlaod tmux plugin manager: [link](https://github.com/tmux-plugins/tpm), run prefix + I in tmux session.
 
 # OpenAI Codex Plugin
 * https://github.com/tom-doerr/vim_codex
