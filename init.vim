@@ -291,7 +291,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " coc_config
 let g:coc_global_extensions = [
-			\'coc-pyright',
+			\'coc-jedi',
 			\'coc-pairs',
 			\'coc-json',
 			\'coc-rust-analyzer',
