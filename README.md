@@ -44,8 +44,9 @@ IMHO, better than htop.
     - do ```:CocConfig``` and add the following lines into the coc-setting.json file.
     ```
     {
-        "python.linting.pylintArgs": ["--generate-members"],
-        "python.pythonPath": "PATH-TO-PYTHON-IN-CURRENT-VIRTUAL-ENVIRONMENT"
+        "python.linting.pylintArgs": ["--generate-members=numpy.*,torch.*", "--errors-only"],
+        "python.pythonPath": "PATH-TO-PYTHON-IN-CURRENT-VIRTUAL-ENVIRONMENT",
+        "python.analysis.typeCheckingMode": "off" <- this solve the torch problem. pyright cannot properly parse the torch lib.
     }
     ```
 
