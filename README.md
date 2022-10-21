@@ -81,9 +81,29 @@ IMHO, better than htop.
 # Interactive jupyter notebook in neovim
 ## jupytext
 * Install jupytext: ```pip install jupytext```
-* in ```.config/nvim/pack``` create a folder named ```jupytext.vim``` and make a file with the same name. Copy script from [here](https://github.com/GCBallesteros/jupytext.vim).
 * Now, open a ipynb file, and do set syntax=python to enable syntax.
 
 ## Iron.vim
 Install Lua from [here](http://www.lua.org/download.html)
-Follow the steps [here](https://github.com/GCBallesteros/iron.nvim).
+Follow the steps [here](https://maxwellrules.com/misc/nvim_jupyter.html).
+Basically, create a file ```plugins.lua``` under ```$HOME/.config/nvim/``` with this script:
+```lua
+local iron = require "iron.core"
+iron.setup({
+  config = {
+    should_map_plug = false,
+    scratch_repl = true,
+    repl_definition = {
+      python = {
+        command = { "ipython" },
+        format = require("iron.fts.common").bracketed_paste,
+      },
+    },
+  },
+  keymaps = {
+    send_motion = "ctr",
+    visual_send = "ctr",
+  },
+})
+
+```
