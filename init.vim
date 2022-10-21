@@ -242,6 +242,7 @@ let g:coc_global_extensions = [
 			\'coc-vimlsp',
 			\'coc-tsserver',
 			\'coc-clangd',
+			\'coc-sh',
 			\'coc-texlab']
 
 " mapping command for telescope
