@@ -77,3 +77,13 @@ IMHO, better than htop.
 
 # Gruxbox theme for linux terminal
 * https://reposhub.com/linux/shell-customization/Mayccoll-Gogh.html
+
+# Interactive jupyter notebook in neovim
+## jupytext
+* Install jupytext: ```pip install jupytext```
+* in ```.config/nvim/pack``` create a folder named ```jupytext.vim``` and make a file with the same name. Copy script from [here](https://github.com/GCBallesteros/jupytext.vim).
+* Now, open a ipynb file, and do set syntax=python to enable syntax.
+
+## Iron.vim
+Install Lua from [here](http://www.lua.org/download.html)
+Follow the steps [here](https://github.com/GCBallesteros/iron.nvim).
