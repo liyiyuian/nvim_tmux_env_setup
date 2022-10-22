@@ -117,6 +117,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" space + rs -> IronRepl
+" space + rr -> IronRestart
+
 " ####################### NERDTREE #############################################
 "autocmd vimenter * NERDTree " automatically open NERDTREE while opening neovim
 "close the window when the left is NERDTree
