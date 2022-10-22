@@ -1,9 +1,9 @@
 syntax on
 
 call plug#begin('~/.config/nvim/pack')
-Plug 'GCBallesteros/jupytext.vim'
+Plug 'GCBallesteros/jupytext.vim' " load .ipynb in .py and autosave changes
 Plug 'JamshedVesuna/vim-markdown-preview'
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround' 
 "Plug 'lervag/vimtex'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'morhetz/gruvbox'
@@ -19,8 +19,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'gosukiwi/vim-atom-dark'
 Plug 'sonph/onehalf'
 Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
@@ -38,7 +36,9 @@ Plug 'GCBallesteros/vim-textobj-hydrogen'
 "Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "currently having issue with new goup name requirements. Add back later after it's updated
 "Plug 'nvim-tree/nvim-web-devicons' "this might be a better option than vim-devicons, since it comes with color by default
 call plug#end()
+" Consider to use nvim-treesitter for syntax annotation
 
+" ####################### Basic Configuration ##################################
 set relativenumber
 set laststatus=2
 set noshowmode
@@ -54,11 +54,62 @@ set cmdheight=1
 set showmatch
 set clipboard=unnamedplus " using system clipboard
 set ttyfast
-set list lcs=tab:\|\ 
-"
+"set list lcs=tab:\|\ 
+set list
+set listchars=tab:\¦-
+set nowrap
+set backspace=2
+set backspace=indent,eol,start
+set ignorecase
+"set smartcase
+"set termguicolors
+
 " Make view and load view automatically
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
+
+" ####################### Set Highlight Color ##################################
+" ref color: https://jonasjacek.github.io/colors/
+hi Search ctermbg=0
+hi Search ctermfg=15 
+
+" Jupytext
+" ####################### Jupytext Configuration ###############################
+let g:jupytext_fmt = 'py'
+let g:jupytext_style = 'hydrogen'
+
+" ####################### Iron Configuration ###################################
+" Send cell to IronRepl and move to next cell.
+" Depends on the text object defined in vim-textobj-hydrogen
+" You first need to be connected to IronRepl
+nmap ]x ctrih/^# %%<CR><CR>
+
+luafile $HOME/.config/nvim/plugins.lua
+luafile $HOME/.config/nvim/iron_split.lua
+
+" ####################### Keybindings ##########################################
+" toggle NERDTree
+nmap <leader>t :NERDTreeToggle<CR>
+
+" resize the current window
+nmap <leader>, <C-W><
+nmap <leader>. <C-W>>
+
+"
+imap jk <ESC>
+imap kj <ESC>
+
+" usage of tpope/vim-surround
+" change surround: cs + "original symbol" + "new symbol"
+" add surround: ysiw + "symbol"
+" add {} and () and [] without space, use the back one ']'; with space, use '[' 
+nmap <leader>" ysiw"
+nmap <leader>' ysiw'
+nmap <leader>9 ysiw)
+" remove surround: ds + "symbol"
+nmap <leader>"" ds"
+nmap <leader>'' ds'
+nmap <leader>99 ds(
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -66,20 +117,32 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-
-"NerdTree
-autocmd vimenter * NERDTree
+" ####################### NERDTREE #############################################
+"autocmd vimenter * NERDTree " automatically open NERDTREE while opening neovim
 "close the window when the left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeWinSize=30
+let g:NERDTreeWinSize=25
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg)
  exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
  exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:bg .' guifg='. a:fg
 endfunction
+"
+" ####################### Telescope Configuration ##############################
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
-" Coc Config from Github
+" Using Lua functions
+"nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+"nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+"nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+"nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+
+" ####################### Coc Config from GitHub ###############################
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -183,7 +246,7 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-
+"
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -232,7 +295,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 
-" coc_config
+" ###################### Coc Configuration #####################################
 let g:coc_global_extensions = [
 			\'coc-pyright',
 			\'coc-pairs',
@@ -245,20 +308,7 @@ let g:coc_global_extensions = [
 			\'coc-sh',
 			\'coc-texlab']
 
-" mapping command for telescope
-" Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" Using Lua functions
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-
-" Bullets.vim
+" ####################### Bullets vim ##########################################
 let g:bullets_enabled_file_types = [
     \ 'markdown',
     \ 'text',
@@ -266,6 +316,7 @@ let g:bullets_enabled_file_types = [
     \ 'scratch'
     \]
 
+" ####################### Gruvbox Configuration ################################
 colorscheme gruvbox
 let g:gruvbox_contrast_dark='hard'
 set background=dark
@@ -281,17 +332,63 @@ let g:gruvbox_invert_selection='1'
 let g:gruvbox_invert_signs='0'
 let g:gruvbox_invert_indent_guides='1'
 let g:gruvbox_invert_tabline='1'
-let g:indent_guides_enable_on_vim_startup=0
-"let g:lightline = {'colorscheme': 'jellybeans',}
 
-luafile /Users/liyiyuian/.config/nvim/lualine.lua
-"" ###########################  vim-markdown-preview ############################
+luafile $HOME/.config/nvim/lualine.lua
+
+" ####################### Notes ################################################
+"" Press ctrl-p to get the markdown preview
+"" Valloric/YouCompleteMe is an autocomplete program, but requires new ver vim
+"" The multiple cursors uses ctrl+n to find next
+"" c for ?, s for ?, I for insert in the begining, A for insert after
+"" ctrl-o: jump back to previous location
+"" ctrl-i: jump forward to the newer location
+"" ctrl-\ + ctrl-n: espace from the terminal
+"" CocCommand: shows commands that can be used
+"" CocList service: shows the current running languages server
+"" For most coc-x, do CocInstall coc-x to install, and add to the global
+"" extensions. CocList extensions: shows the installed extensions
+"" " and then add 1-0 and y can copy things to register. Rg can show those
+"" texts, and " + {} + p will paste that text
+"" "+y will copy to system clipboard
+"" use ctr+w + w to switch to pop-up window, and use ctrl+w + q to exit the
+"" popup
+
+"" For a split window: You can use Ctrl-w + and Ctrl-w - to resize the height of the current window by a single row. For a vsplit window: You can use Ctrl-w > and Ctrl-w < to resize the width of the current window by a single column. Additionally, these key combinations accept a count prefix so that you can change the window size in larger steps. [e.g. Ctrl-w 10 + increases the window size by 10 lines]
+"" To resize all windows to equal dimensions based on their splits, you can use Ctrl-w =.
+"" To increase a window to its maximum height, use Ctrl-w _.
+"" To increase a window to its maximum width, use Ctrl-w |.
+""
+"""Swap top/bottom or left/right split
+"" Ctrl+W R
+
+""Break out current window into a new tabview
+"" Ctrl+W T
+
+""Close every window in the current tabview but the current one
+"" Ctrl+W o
+
+"to far left :wincmd H; right :wincmd L
+"first to last :wincmd R, (r) reverse
+
+"NerdCommenter \+cs, \+cu
+"NERDTREE
+	""change tab is gt or gT
+	""open file in the tab: t and T
+	""open file in split: i(horizontal), s(vertical)
+
+" To check the full definition, get into the normal mode, press K and use 
+" ctl-W + w to jump into the floating window
+
+
+" ##############################################################################
+" ####################### Some Old Setups ######################################
+" ##############################################################################
+
+" ###########################  vim-markdown-preview ############################
 "let vim_markdown_preview_github=1
-
-
 "set guifont=NerdFonts/DroidSansMono\ Nerd\ Font\ 11
 
-"" ##########################  cpp enhanced highlight  ##########################
+" ##########################  cpp enhanced highlight  ##########################
 ""C++ syntax highlighting options
 ""Highlighting of class scope is disabled by default. To enable set
 
@@ -324,102 +421,6 @@ luafile /Users/liyiyuian/.config/nvim/lualine.lua
 
 ""let g:cpp_no_function_highlight = 1
 
-
 "" split windows below and right
 "set splitbelow
 "set splitright
-
-"" show tabs
-"set list
-"set listchars=tab:\¦-
-
-"" set highlight color 
-"" ref color: https://jonasjacek.github.io/colors/
-"hi Search ctermbg=0
-"hi Search ctermfg=15 
-
-"" highlight background past 80 chars
-"" autocmd FileType python let &colorcolumn=join(range(81,999),",")
-
-"imap jk <Esc>
-"imap kj <Esc>
-"" :cd %:p:h can set the directory to the current working directory
-"" % gives the name of the current file, $:p gives its full path, and
-"" %:p:h gives its directory (the "head" fo the full path)
-
-"" this command changes the window-local current directory to the same as the
-"" directory of the current file.
-"autocmd BufEnter * silent! lcd %:p:h
-
-"set pumheight=20 " makes popup menu smaller
-
-"" better tabbing
-"vnoremap < <gv
-"vnoremap > >gv
-
-"" auto source when writing to init.vim TODO: Does this really work????
-""au! BufWritePost $MYVIMRC source %
-
-"" resize windows
-""nnoremap <M-j> :resize -2<CR>
-""nnoremap <M-k> :resize +2<CR>
-""nnoremap <M-h> :vertical resize -2<CR>
-""nnoremap <M-l> :vertical resize +2<CR>
-
-"" ############################  Notes for packages  ############################
-"" Press ctrl-p to get the markdown preview
-"" Valloric/YouCompleteMe is an autocomplete program, but requires new ver vim
-"" The multiple cursors uses ctrl+n to find next
-"" c for ?, s for ?, I for insert in the begining, A for insert after
-"" ctrl-o: jump back to previous location
-"" ctrl-i: jump forward to the newer location
-"" ctrl-\ + ctrl-n: espace from the terminal
-"" CocCommand: shows commands that can be used
-"" CocList service: shows the current running languages server
-"" For most coc-x, do CocInstall coc-x to install, and add to the global
-"" extensions. CocList extensions: shows the installed extensions
-"" " and then add 1-0 and y can copy things to register. Rg can show those
-"" texts, and " + {} + p will paste that text
-"" "+y will copy to system clipboard
-"" use ctr+w + w to switch to pop-up window, and use ctrl+w + q to exit the
-"" popup
-
-"" For a split window: You can use Ctrl-w + and Ctrl-w - to resize the height of the current window by a single row. For a vsplit window: You can use Ctrl-w > and Ctrl-w < to resize the width of the current window by a single column. Additionally, these key combinations accept a count prefix so that you can change the window size in larger steps. [e.g. Ctrl-w 10 + increases the window size by 10 lines]
-"" To resize all windows to equal dimensions based on their splits, you can use Ctrl-w =.
-"" To increase a window to its maximum height, use Ctrl-w _.
-"" To increase a window to its maximum width, use Ctrl-w |.
-""
-"""Swap top/bottom or left/right split
-"" Ctrl+W R
-
-""Break out current window into a new tabview
-"" Ctrl+W T
-
-""Close every window in the current tabview but the current one
-"" Ctrl+W o
-
-
-
-"to far left :wincmd H; right :wincmd L
-"first to last :wincmd R, (r) reverse
-
-"NerdCommenter \+cs, \+cu
-"NERDTREE
-	""change tab is gt or gT
-	""open file in the tab: t and T
-	""open file in split: i(horizontal), s(vertical)
-
-" To check the full definition, get into the normal mode, press K and use 
-" ctl-W + w to jump into the floating window
-
-" Jupytext
-let g:jupytext_fmt = 'py'
-let g:jupytext_style = 'hydrogen'
-
-" Send cell to IronRepl and move to next cell.
-" Depends on the text object defined in vim-textobj-hydrogen
-" You first need to be connected to IronRepl
-nmap ]x ctrih/^# %%<CR><CR>
-
-luafile $HOME/.config/nvim/plugins.lua
-luafile $HOME/.config/nvim/iron_split.lua
