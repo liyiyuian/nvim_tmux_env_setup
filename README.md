@@ -105,6 +105,4 @@ iron.setup({
     visual_send = "ctr",
   },
 })
-
 ```
-For some reasons, the ipython window always appears at the bottom, so need to do [this](https://stackoverflow.com/questions/1269603/to-switch-from-vertical-split-to-horizontal-split-fast-in-vim) to shift it with ctr-w + [h,j,k,l,H,J,K,L].
