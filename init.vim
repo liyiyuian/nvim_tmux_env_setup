@@ -120,6 +120,21 @@ nnoremap <C-H> <C-W><C-H>
 " space + rs -> IronRepl
 " space + rr -> IronRestart
 
+" ####################### Folding ##############################################
+set foldmethod=indent 
+" manual – Manual folding: You must choose which specific lines you want to fold. They can be at arbitrary demarcations.
+" indent – Indent folding: Lines at the same indentation level are folded.
+" syntax – Syntax folding: The syntax highlighting of the current window defines the folds.
+" expr – Expressing folding: Powerful way of defining your own fold methods, often with regular expressions.
+" marker – Marker folding: Tell Vim where to fold your text by adding special characters to it.
+"za – Toggles the current fold open or closed. – The most useful command to know of all of these.
+"zA – Same as za except it toggles all folds beneath as well. Since folds can be nested (such as with indent folding), this will toggle the state of all the folds underneath of it, not just the current fold.
+"zc – Close the current fold.
+"zC – Same as above, but closes folds nested underneath as well.
+"zo – Open the current fold.
+"zO – Same as above, but opens folds nested underneath as well.
+
+
 " ####################### NERDTREE #############################################
 "autocmd vimenter * NERDTree " automatically open NERDTREE while opening neovim
 "close the window when the left is NERDTree
