@@ -56,6 +56,18 @@ IMHO, better than htop.
 * ```sudo apt install fzf``` or ```conda install -c conda-forge fzf```
 * ```sudo apt-get install fd-find``` or ```conda install -c conda-forge fd-find```
 * Might need to do some changes in .bashrc for fd depends on environment setup.
+```
+Bash
+====
+
+Append this line to ~/.bashrc to enable fzf keybindings for Bash:
+
+   source /usr/share/doc/fzf/examples/key-bindings.bash
+
+Append this line to ~/.bashrc to enable fuzzy auto-completion for Bash:
+
+   source /usr/share/doc/fzf/examples/completion.bash
+   ```
 
 # bat setup
 * ```apt install bat``` or ```conda install -c conda-forge bat```
