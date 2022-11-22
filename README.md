@@ -118,3 +118,10 @@ iron.setup({
   },
 })
 ```
+# ssh server setup
+1. Install with ```sudo apt install openssh-server```
+2. Edit config file with ```sudo nvim /etc/ssh/sshd_config```
+  1. enable the ```HostKey``` want to use, and enable ```AuthorizedKeysFile```.
+  2. create the authorized key file and put local machine's public key to the file
+  3. copy the public key from ```/etc/ssh/sshd_config``` on the host to the ```.ssh``` folder on local machine.
+3. sudo systemctl restart ssh
