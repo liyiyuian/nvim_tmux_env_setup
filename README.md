@@ -125,3 +125,10 @@ iron.setup({
   2. create the authorized key file and put local machine's public key to the file
   3. copy the public key from ```/etc/ssh/sshd_config``` on the host to the ```.ssh``` folder on local machine.
 3. sudo systemctl restart ssh
+
+# Get nerd font working on chromeOS
+1. Open terminal app, press ctrl+shift+j, paste the following command.
+```
+term_.prefs_.set('font-family', 'DejaVu Sans Mono Nerd');
+term_.prefs_.set('user-css-text', '@font-face {font-family: "DejaVu Sans Mono Nerd"; src: url("https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf"); font-weight: normal; font-style: normal;}')
+```
