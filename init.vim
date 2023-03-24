@@ -8,7 +8,7 @@ Plug 'tpope/vim-surround'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-python/python-syntax'
+"Plug 'vim-python/python-syntax'
 Plug 'jiangmiao/auto-pairs' 
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
@@ -23,18 +23,24 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'nvim-treesitter/playground'
+"Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+"Plug 'nvim-treesitter/playground'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'dkarter/bullets.vim'
 "Plug 'wellle/context.vim' "this one looks fun maybe try later!!
-Plug 'heavenshell/vim-pydocstring' "vim-pydocstring is a generator for Python docstrings and is capable of automatically
+"Plug 'heavenshell/vim-pydocstring' "vim-pydocstring is a generator for Python docstrings and is capable of automatically
 Plug 'hkupty/iron.nvim'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'GCBallesteros/vim-textobj-hydrogen'
+Plug 'jalvesaq/Nvim-R'
 "Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "currently having issue with new goup name requirements. Add back later after it's updated
 "Plug 'nvim-tree/nvim-web-devicons' "this might be a better option than vim-devicons, since it comes with color by default
+Plug 'jpalardy/vim-slime', { 'for': 'python' } "ipython cell
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } "ipython cell
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 " Consider to use nvim-treesitter for syntax annotation
 
@@ -63,6 +69,7 @@ set backspace=indent,eol,start
 set ignorecase
 "set smartcase
 "set termguicolors
+set number
 
 " Make view and load view automatically
 autocmd BufWinLeave *.* mkview
@@ -76,7 +83,7 @@ hi Search ctermfg=15
 " Jupytext
 " ####################### Jupytext Configuration ###############################
 let g:jupytext_fmt = 'py'
-let g:jupytext_style = 'hydrogen'
+let g:jupytext_style = 'percent'
 
 " ####################### Iron Configuration ###################################
 " Send cell to IronRepl and move to next cell.
@@ -99,6 +106,50 @@ nmap <leader>. <C-W>>
 imap jk <ESC>
 imap kj <ESC>
 
+
+"""this" is an example
+
+" ####################### Folding for IPython cells ############################
+" This is only use for folding ipython cells
+function! FoldAnalysis( line )
+	if a:line =~ '# %%*'
+        " A level 1 fold starts here; cp :help fold-expr
+        return '>1'
+	elseif a:line =~ '# %%*'
+        " A level 1 fold ends here
+        return '<1'
+    else
+        " Use fold level from previous line
+        return '='
+    endif
+endfunction
+autocmd FileType python set foldmethod=expr foldexpr=FoldAnalysis(getline(v:lnum))
+
+function MyFoldText()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '^# %% \|^# %%', '', 'g')
+  let sub = '[ '.sub.' ('
+  let foldlinecount = foldclosedend(v:foldstart) - foldclosed(v:foldstart) + 1
+  let prefix = sub."Lines: ".foldlinecount.") ] "
+  return v:folddashes .. prefix
+endfunction
+
+autocmd FileType python set foldtext=MyFoldText()
+nmap <leader><space> za
+
+" ####################### vim-multiple-cursors #################################
+let g:multi_cursor_use_default_mapping=0
+
+" Default mapping
+let g:multi_cursor_start_word_key      = '<C-n>'
+let g:multi_cursor_select_all_word_key = '<A-n>'
+let g:multi_cursor_start_key           = 'g<C-n>'
+let g:multi_cursor_select_all_key      = 'g<A-n>'
+let g:multi_cursor_next_key            = '<C-n>'
+let g:multi_cursor_prev_key            = '<C-p>'
+let g:multi_cursor_skip_key            = '<C-x>'
+let g:multi_cursor_quit_key            = '<Esc>'
+
 " usage of tpope/vim-surround
 " change surround: cs + "original symbol" + "new symbol"
 " add surround: ysiw + "symbol"
@@ -119,21 +170,6 @@ nnoremap <C-H> <C-W><C-H>
 
 " space + rs -> IronRepl
 " space + rr -> IronRestart
-
-" ####################### Folding ##############################################
-set foldmethod=indent 
-" manual – Manual folding: You must choose which specific lines you want to fold. They can be at arbitrary demarcations.
-" indent – Indent folding: Lines at the same indentation level are folded.
-" syntax – Syntax folding: The syntax highlighting of the current window defines the folds.
-" expr – Expressing folding: Powerful way of defining your own fold methods, often with regular expressions.
-" marker – Marker folding: Tell Vim where to fold your text by adding special characters to it.
-"za – Toggles the current fold open or closed. – The most useful command to know of all of these.
-"zA – Same as za except it toggles all folds beneath as well. Since folds can be nested (such as with indent folding), this will toggle the state of all the folds underneath of it, not just the current fold.
-"zc – Close the current fold.
-"zC – Same as above, but closes folds nested underneath as well.
-"zo – Open the current fold.
-"zO – Same as above, but opens folds nested underneath as well.
-
 
 " ####################### NERDTREE #############################################
 "autocmd vimenter * NERDTree " automatically open NERDTREE while opening neovim
@@ -243,8 +279,8 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>A  <Plug>(coc-codeaction-selected)
+nmap <leader>A  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
 nmap <leader>ac  <Plug>(coc-codeaction)
@@ -352,6 +388,97 @@ let g:gruvbox_invert_indent_guides='1'
 let g:gruvbox_invert_tabline='1'
 
 luafile $HOME/.config/nvim/lualine.lua
+
+
+"------------------------------------------------------------------------------
+" slime configuration 
+"------------------------------------------------------------------------------
+" always use tmux
+let g:slime_target = 'tmux'
+
+" fix paste issues in ipython
+let g:slime_python_ipython = 1
+
+" always send text to the top-right pane in the current tmux tab without asking
+let g:slime_default_config = {
+            \ 'socket_name': get(split($TMUX, ','), 0),
+            \ 'target_pane': '{top-left}' }
+
+let g:slime_dont_ask_default = 1
+
+"------------------------------------------------------------------------------
+" ipython-cell configuration
+"------------------------------------------------------------------------------
+" Keyboard mappings. <Leader> is \ (backslash) by default
+
+" map <Leader>s to start IPython
+nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
+
+" map <Leader>r to run script
+nnoremap <Leader>r :IPythonCellRun<CR>
+
+" map <Leader>R to run script and time the execution
+nnoremap <Leader>R :IPythonCellRunTime<CR>
+
+" map <Leader>c to execute the current cell
+nnoremap <Leader>: :IPythonCellExecuteCellVerbose<CR>
+
+" map <Leader>C to execute the current cell and jump to the next cell
+nnoremap <Leader>c :IPythonCellExecuteCellVerboseJump<CR>
+
+" map <Leader>l to clear IPython screen
+nnoremap <Leader>l :IPythonCellClear<CR>
+
+" map <Leader>x to close all Matplotlib figure windows
+nnoremap <Leader>x :IPythonCellClose<CR>
+
+" map [c and ]c to jump to the previous and next cell header
+nnoremap [c :IPythonCellPrevCell<CR>
+nnoremap ]c :IPythonCellNextCell<CR>
+
+" map <Leader>h to send the current line or current selection to IPython
+nmap <Leader>h <Plug>SlimeLineSend
+xmap <Leader>h <Plug>SlimeRegionSend
+
+" map <Leader>p to run the previous command
+nnoremap <Leader>p :IPythonCellPrevCommand<CR>
+
+" map <Leader>Q to restart ipython
+nnoremap <Leader>Q :IPythonCellRestart<CR>
+
+" map <Leader>d to start debug mode
+nnoremap <Leader>d :SlimeSend1 %debug<CR>
+
+" map <Leader>q to exit debug mode or IPython
+nnoremap <Leader>q :SlimeSend1 exit<CR>
+
+" map <F9> and <F10> to insert a cell header tag above/below and enter insert mode
+"nmap <F9> :IPythonCellInsertAbove<CR>a
+"nmap <F10> :IPythonCellInsertBelow<CR>a
+nmap <Leader>a :IPythonCellInsertAbove<CR>a
+nmap <Leader>b :IPythonCellInsertBelow<CR>a
+
+" also make <F9> and <F10> work in insert mode
+imap <F9> <C-o>:IPythonCellInsertAbove<CR>
+imap <F10> <C-o>:IPythonCellInsertBelow<CR>
+
+nmap <Leader>m :IPythonCellToMarkdown<CR>
+
+augroup ipython_cell_highlight
+    autocmd!
+    autocmd ColorScheme * highlight IPythonCell ctermbg=238 guifg=darkgrey guibg=#444d56
+augroup END
+let g:ipython_cell_highlight_cells = 1
+"highlight default link IPythonCell Folded
+"augroup highlight_python_cells
+    "autocmd!
+    "autocmd VimEnter,WinEnter * match IPythonCell /\s*# %%.*\|\s*#%%.*\|\s*# <codecell>.*\|\s*##.*/
+"augroup END
+
+" send header first
+let g:ipython_cell_send_cell_headers = 1
+
+
 
 " ####################### Notes ################################################
 "" Press ctrl-p to get the markdown preview
