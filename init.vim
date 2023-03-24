@@ -23,7 +23,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-"Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 "Plug 'nvim-treesitter/playground'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'dkarter/bullets.vim'
@@ -35,11 +35,11 @@ Plug 'kana/vim-textobj-line'
 Plug 'GCBallesteros/vim-textobj-hydrogen'
 Plug 'jalvesaq/Nvim-R'
 "Plug 'tiagofumo/vim-nerdtree-syntax-highlight' "currently having issue with new goup name requirements. Add back later after it's updated
-"Plug 'nvim-tree/nvim-web-devicons' "this might be a better option than vim-devicons, since it comes with color by default
+Plug 'nvim-tree/nvim-web-devicons' "this might be a better option than vim-devicons, since it comes with color by default
 Plug 'jpalardy/vim-slime', { 'for': 'python' } "ipython cell
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' } "ipython cell
 Plug 'nvim-tree/nvim-web-devicons'
-Plug 'romgrk/barbar.nvim'
+"Plug 'romgrk/barbar.nvim'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 " Consider to use nvim-treesitter for syntax annotation
@@ -72,8 +72,11 @@ set ignorecase
 set number
 
 " Make view and load view automatically
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview
+"autocmd BufWinLeave *.* mkview
+"autocmd BufWinEnter *.* silent loadview
+
+autocmd BufLeave,BufWinLeave * silent! mkview
+autocmd BufReadPost * silent! loadview
 
 " ####################### Set Highlight Color ##################################
 " ref color: https://jonasjacek.github.io/colors/
