@@ -136,3 +136,11 @@ term_.prefs_.set('user-css-text', '@font-face {font-family: "DejaVu Sans Mono Ne
 # Addition tools 
 exa, an alternative of ```ls```.
 ```cargo install exa```
+
+
+# default shell for mac (fresh start) [source](https://apple.stackexchange.com/questions/371997/suppressing-the-default-interactive-shell-is-now-zsh-message-in-macos-catalina)
+Steps:
+1. Install Homebrew if you haven't already.
+2. Install the latest bash shell with Homebrew: ```brew update && brew install bash```
+3. If you have an Apple Intel computer, change the shell like this: ```sudo chsh -s /usr/local/bin/bash $(whoami)```
+4. Or if you have Apple Silicon (e.g. M1): ```sudo chsh -s /opt/homebrew/bin/bash $(whoami)```
