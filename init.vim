@@ -78,6 +78,15 @@ set number
 autocmd BufLeave,BufWinLeave * silent! mkview
 autocmd BufReadPost * silent! loadview
 
+" ####################### Copilot settting #####################################
+let g:copilot_filetypes = {
+			\ '*': v:false,
+			\ 'python': v:true,
+			\}
+
+imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")
+"let g:copilot_no_tab_map = v:true
+
 " ####################### Set Highlight Color ##################################
 " ref color: https://jonasjacek.github.io/colors/
 hi Search ctermbg=0
