@@ -134,9 +134,9 @@ term_.prefs_.set('user-css-text', '@font-face {font-family: "DejaVu Sans Mono Ne
 ```
 
 # Addition tools 
-exa, an alternative of ```ls```.
-```cargo install exa```
+exa, an alternative of ```ls```. ```cargo install exa```
 
+dust, an alternative of ```du```. ```cargo install du-dust```
 
 # default shell for mac (fresh start) [source](https://apple.stackexchange.com/questions/371997/suppressing-the-default-interactive-shell-is-now-zsh-message-in-macos-catalina)
 Steps:
